@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tvchannelremote.R
 import com.example.tvchannelremote.data.TVChannel
 import com.example.tvchannelremote.ui.adapters.TVChannelsAdapter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -23,7 +24,15 @@ class HomeFragment : Fragment() {
         TVChannel("CBS", 4),
         TVChannel("ABC", 5),
         TVChannel("FOX", 9),
-        TVChannel("NBC", 11)
+        TVChannel("NBC", 11),
+        TVChannel("CC", 15),
+        TVChannel("TBS", 14),
+        TVChannel("ESPN", 13),
+        TVChannel("ESPN2", 16),
+        TVChannel("ESPN3", 18),
+        TVChannel("ESPN4", 19),
+        TVChannel("ESPN5", 12),
+        TVChannel("TNT", 17)
     )
 
     override fun onCreateView(
@@ -41,6 +50,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerview_tvchannels.layoutManager = LinearLayoutManager(activity)
         recyclerview_tvchannels.adapter = TVChannelsAdapter(tvChannels)
+        button.setOnClickListener {
+
+            Snackbar.make(it, "Card Added", Snackbar.LENGTH_LONG).show()
+        }
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             text_home.text = it
         })

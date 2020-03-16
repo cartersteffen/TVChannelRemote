@@ -10,8 +10,7 @@ import com.example.tvchannelremote.data.TVChannel
 class TVChannelsAdapter(private val list: List<TVChannel>) : RecyclerView.Adapter<TVChannelsAdapter.TVChannelViewHolder>() {
 
 
-    class TVChannelViewHolder(itemView: ViewGroup, inflater: LayoutInflater) : RecyclerView.ViewHolder(inflater.inflate(
-        R.layout.tvchannel, itemView, false)) {
+    class TVChannelViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView) {
 
         private var channelName: TextView? = null
         private var channelNumber: TextView? = null
@@ -28,8 +27,7 @@ class TVChannelsAdapter(private val list: List<TVChannel>) : RecyclerView.Adapte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVChannelViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return TVChannelViewHolder(parent, inflater)
+        return TVChannelViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.tvchannel, parent, false) as ViewGroup)
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
