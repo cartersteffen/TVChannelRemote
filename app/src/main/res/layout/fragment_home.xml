@@ -14,8 +14,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constrainedHeight="true"
         />
 
     <TextView
@@ -39,10 +41,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerview_tvchannels"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintVertical_bias="0.01" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
