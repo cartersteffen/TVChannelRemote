@@ -19,29 +19,19 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mAdapter: TVChannelsAdapter
 
-    private val tvChannels = listOf(
-        TVChannel("CBS", 4),
-        TVChannel("ABC", 5),
-        TVChannel("FOX", 9),
-        TVChannel("NBC", 11),
-        TVChannel("CC", 15),
-        TVChannel("TBS", 14),
-        TVChannel("ESPN", 13),
-        TVChannel("ESPN2", 16),
-        TVChannel("ESPN3", 18),
-        TVChannel("ESPN4", 19),
-        TVChannel("ESPN5", 12),
-        TVChannel("TNT", 17)
-    )
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
+
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }
@@ -49,13 +39,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerview_tvchannels.layoutManager = LinearLayoutManager(activity)
-        recyclerview_tvchannels.adapter = TVChannelsAdapter(tvChannels)
+        recyclerview_tvchannels.adapter = TVChannelsAdapter(homeViewModel.getTVChannels().value!!)
+        mAdapter = recyclerview_tvchannels.adapter as TVChannelsAdapter
         button.setOnClickListener {
-
-            Snackbar.make(it, "Card Added", Snackbar.LENGTH_LONG).show()
+            homeViewModel.addTVChannel(TVChannel("New Channel", 20))
+            //(recyclerview_tvchannels.adapter as TVChannelsAdapter).notifyDataSetChanged()
+            homeViewModel.setText("New String")
+            //Snackbar.make(it, "Card Added", Snackbar.LENGTH_LONG).show()
         }
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             text_home.text = it
         })
+        homeViewModel.getTVChannels().observe(viewLifecycleOwner, Observer {
+            mAdapter.notifyDataSetChanged()
+        })
+        /*val channelObserver = Observer<List<TVChannel>> {
+            recyclerview_tvchannels.adapter?.notifyDataSetChanged()
+        }
+        homeViewModel.getTVChannels().observe(viewLifecycleOwner, channelObserver)*/
     }
 }
