@@ -1,20 +1,22 @@
 package com.example.tvchannelremote.ui.home
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tvchannelremote.R
 import com.example.tvchannelremote.data.TVChannel
 import com.example.tvchannelremote.ui.adapters.TVChannelsAdapter
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeFragment : Fragment() {
 
@@ -24,6 +26,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
+        //homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
 
     }
 
@@ -46,6 +49,14 @@ class HomeFragment : Fragment() {
             //(recyclerview_tvchannels.adapter as TVChannelsAdapter).notifyDataSetChanged()
             homeViewModel.setText("New String")
             //Snackbar.make(it, "Card Added", Snackbar.LENGTH_LONG).show()
+            val snack: Snackbar = Snackbar.make(wholeLayout, "Card Added", Snackbar.LENGTH_LONG)
+            val view = snack.view
+            val params =
+                view.layoutParams as FrameLayout.LayoutParams
+            params.gravity = Gravity.TOP
+            view.layoutParams = params
+            snack.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+            snack.show()
         }
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             text_home.text = it
